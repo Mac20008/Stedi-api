@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-stedi-jose
+spec:
+  selector:
+    matchLabels:
+      app: redis-stedi-jose  # has to match .spec.template.metadata.labels
+  serviceName: redis-stedi-jose
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-stedi-jose  # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+        - name: redis-stedi-jose
+          image: redis:7.0.5-alpine
+          imagePullPolicy: Always
+          args: ["--requirepass", "$(REDIS_PASS)", "--appendonly", "yes", "--save", "900", "1", "--save", "30", "2"]
+          ports:
+            - containerPort: 6379
+              name: redis
+          env:
+          - name: REDIS_PASS
+            valueFrom:
+              secretKeyRef:
+                name: redis-secrets-jose
+                key: REDIS_PASS
+          volumeMounts:
+            - name: redis-jose-volume
+              mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-jose-volume
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+---          
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-stedi-jose
+spec:
+  ports:
+    - port: 6379
+      name: redis
+  clusterIP: None
+  selector:
+    app: redis-stedi-jose
