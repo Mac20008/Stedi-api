@@ -1,0 +1,40 @@
+<!--© 2021 Sean Murdock-->
+
+<html>
+	<script src="jquery-3.6.0.min.js"></script>
+	<script src="timer.js"></script>
+	<head>
+		<title>STEDI</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+		<!--http://getbootstrap.com/getting-started/-->
+		<link rel="shortcut icon" href= "favicon.ico" type="image/x-icon" />
+	</head>
+	<body>
+	<div style="text-align:center">
+	<p class="stepcount">STEDI Participant: <a id="email"></a></p>
+	<p>
+		<input class="stopwatch" id="stopwatch" value="0:0:0" type="text"><br>
+	</p>
+
+	<p>
+    	<input class="btn-lg btn-primary" id="startandstopbutton" value="Start/Stop" onclick="startandstop();" type="button"><br>
+	</p>
+	<p>
+		<input class="btn-lg btn-primary" id="counterbutton" value="Add Step" onclick="onStep();" type="button"><br>
+	</p>
+	<p>
+		<input class="btn btn-lg btn-primary" id="resetbutton" value="Reset Stopwatch" onclick="resetstopwatch();" type="button"><br>
+	</p>
+   	<p class="stepcount">Step Count: <a id="clicks">0</a></p>
+	<p class="stepcount">Risk Score: <a id="score"></a></p>
+	<p><a class="stepcount" id="logout" href="/">Log Out</a></p>
+	</div>
+	
+	</body>
+
+</html>
+
+
+
+
+

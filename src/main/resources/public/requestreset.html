@@ -1,0 +1,36 @@
+<!--© 2021 Sean Murdock-->
+
+<!DOCTYPE html>
+<html lang="en">
+<div style="height: 90px">
+<head>
+    <meta charset="UTF-8">
+    <title>Request a Password Reset for your STEDI Password</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href= "favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<div class="page-header">
+    <p><img src="stedi-logo-4000px-x-4000px.png" width="200" height="200" style="background-color:black;"/></p>
+</div>
+<div style="text-align:center">
+
+    <form name="loginForm" id="login" method="post" >
+        <p>
+            <label class="stepcount" for="cellphone">User/Password Recovery</span></label><br>
+            <label class="stepcount" for="cellphone">Cell Phone</span></label><br>
+            <input class="stepcount" id="cellphone" name="pwd" size="25" required >
+        </p>
+        <p>
+            <input class="btn btn-lg btn-primary" id="loginbtn" type="button" onclick="requestreset()" value="Submit">
+        </p>
+
+    </form>
+</div>
+</body>
+</div>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script src="manageuser.js"></script>
+<script src="managecustomer.js"></script>
+</html>

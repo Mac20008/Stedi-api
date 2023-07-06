@@ -1,0 +1,89 @@
+#© 2021 Sean Murdock
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod-stedi-jose
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prod-stedi-jose
+  template:
+    metadata:
+      labels:
+        app: prod-stedi-jose
+    spec:
+      containers:
+        - name: prod-stedi-jose
+          image: gcr.io/cubs-consulting/stedi #This image needs to refer to the new artifact registry repo
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets-jose
+                  key: REDIS_PASS
+            - name: REDIS_HOST
+              value: "redis-stedi-jose"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+            - name: KAFKA_BROKER
+              value: "localhost:9092"
+          ports:
+            - containerPort: 443
+          resources:
+            limits:
+              cpu: ".5"
+              memory: "500Mi"
+            requests:
+              cpu: ".25"
+              memory: "250Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4567
+            initialDelaySeconds: 3
+            periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prod-stedi-jose-nodeport
+spec:
+  selector:
+    app: stedi-prod
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 4567
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prod-stedi-jose-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: stedi-prod-public #this ip has been created yet- needs to be create file
+    networking.gke.io/managed-certificates: prod-stedi-jose-certificate
+    # kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-stedi-jose-nodeport #this needs to match line 53
+            port:
+              number: 80
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: prod-stedi-jose-certificate #this needs to match line 68
+spec:
+  domains:
+    - jose.cit262.com #This is a DNS record that has not been created yet- we need to create that first
+    

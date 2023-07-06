@@ -1,0 +1,103 @@
+#© 2021 Sean Murdock
+# this is a comment
+# this is the version of YAML we are using with the Kubernetes API
+apiVersion: apps/v1 
+# The kind is the type of Kubernetes resource we are using
+# A deployment is when we run code on a a server
+kind: Deployment
+# Metadata is information related to the object we created in Kubernetes
+metadata:
+# The name here is the name of our deployment  
+  name: dev-stedi-jose
+spec:
+# Replicas refers to the number of pods we deploy
+  replicas: 1
+# A selector is a route to my pod
+  selector:
+# Matchlabels are a label for my selector  
+    matchLabels:
+# App is a specific kind of label for my pod
+      app: dev-stedi-jose
+# The Template describes all the features of my pod
+  template:
+# The metadata provides labels for my template  
+    metadata:
+      labels:
+        app: dev-stedi-jose
+# The spec refers to the specification of my containers in my pod        
+    spec:
+# Containers can have one or more Docker containers in the pod
+      containers:
+# The name of the container is specified below      
+        - name: dev-stedi-jose
+# The image is a prebuilt file containing the operating system        
+          image: gcr.io/cubs-consulting/dev-stedi-jose:latest #image needs to  be artifact registry new reopsitory
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets-jose
+                  key: REDIS_PASS
+            - name: REDIS_HOST
+              value: "redis-stedi-jose"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+            - name: KAFKA_BROKER
+              value: "localhost:9092"
+            - name: TWILIO_ACCOUNT_SID
+              valueFrom:
+                secretKeyRef:
+                  name: twilio-dev
+                  key: twilio_account_sid
+            - name: TWILIO_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: twilio-dev
+                  key: twilio_token
+            - name: TWILIO_PHONE
+              value: "+17146778438"
+# The ports is a list of tcp ports the pod listens on
+          ports:
+# ContainerPort is a specific port the pod listens on
+            - containerPort: 80
+# Resources are the compute resources used by the pod in the cloud
+          resources:
+# Limits represent the max amount of cpu and memory allowed for the pod           
+            limits:
+# CPU is the max amount of CPU that can be used by the pod
+              cpu: ".5"
+# Memory is the max amount of memory that can be used by the pod              
+              memory: "500Mi"
+# Requests is the minimum amount of compute resources used by the pod
+            requests:
+# CPU is the minimum amount of CPU the pod needs to run
+              cpu: ".25"
+# Memory is the minimum amount of memory the pod needs to run              
+              memory: "250Mi"
+# LivenessProbe is a configuration that checks the pod for health
+          livenessProbe:
+# HttpGet instructs kubernetes to do an HTTP request to check health
+            httpGet:
+# Path defines the url to use when doing the HTTP request            
+              path: /
+# Port defines the port to use when doing the HTTP request              
+              port: 4567
+# initialDelaySeconds tells Kubernetes to wait before doing a request              
+            initialDelaySeconds: 3
+# periodSeconds tells Kubernetes how often to check health            
+            periodSeconds: 3
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-stedi-jose-loadbalancer
+spec:
+  selector:
+    app: dev-stedi-jose
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 4567

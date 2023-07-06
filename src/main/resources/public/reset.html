@@ -1,0 +1,40 @@
+<!--© 2021 Sean Murdock-->
+
+<!DOCTYPE html>
+<html lang="en">
+<div style="height: 90px">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset your STEDI Password</title>
+    <p class="stepcount">Your username is: <a id="email"></a></p>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href= "favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<div class="page-header">
+    <p><img src="stedi-logo-4000px-x-4000px.png" width="200" height="200" style="background-color:black;"/></p>
+</div>
+<div style="text-align:center">
+
+    <form name="loginForm" id="login" method="post" >
+        <p>
+            <label class="stepcount" for="password">New Password</label><br>
+            <input class="stepcount" type="password" id="password" name="username" size="25" onchange="setuserpassword()" required >
+        </p>
+        <p>
+            <label class="stepcount" for="verifypassword">Verify Password</span></label><br>
+            <input class="stepcount" type="password" id="verifypassword" name="pwd" size="25" onchange="setverifypassword()" required >
+        </p>
+        <p>
+            <input class="btn btn-lg btn-primary" id="loginbtn" type="button" onclick="changePassword()" value="Submit">
+        </p>
+
+    </form>
+</div>
+</body>
+</div>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script src="manageuser.js"></script>
+<script src="managecustomer.js"></script>
+</html>

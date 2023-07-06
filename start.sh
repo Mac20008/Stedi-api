@@ -1,0 +1,1 @@
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=8002,server=y,suspend=n -Dsimulation=true -Dconfig=/etc/stedi-simulation/application.conf -jar /opt/stedi-simulation/StepTimerWebsocket-1.0-SNAPSHOT.jar

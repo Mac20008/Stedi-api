@@ -1,0 +1,58 @@
+<!--© 2021 Sean Murdock-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Account</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href= "favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<div class="page-header">
+    <p><img src="stedi-logo-4000px-x-4000px.png" width="200" height="200" style="background-color:black;"/></p>
+</div>
+
+<form name="newUser" id="newUser" method="post" >
+
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> Name:</label><br>
+        <input class="stepcount" type="text" id="cn" name="customername" size="25"  onchange="setcustomername()" required>
+    </p>
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> E-Mail: </label><br>
+        <input class="stepcount" type="email" id="email" name="email" size="50" onchange="setemail()">
+    </p>
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> Phone Number: </label><br>
+        <input class="stepcount" type="tel" id="phone" name="phone" size="12" onchange="setphone()" required>
+    </p>
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> Birthday: </label><br>
+        <input class="stepcount" type="date" id="bday" name="bday" onchange="setbday()" required>
+    </p>
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> Password (6 digits, upper, lower, number, and symbol): </label><br>
+        <input class="stepcount" type="text" id="password" name="password" size="25" onchange="setuserpassword()" required>
+    </p>
+    <p>
+        <label class="stepcount" for="newUser"><span>*</span> Verify Password: </label><br>
+        <input class="stepcount" type="text" id="verifypassword" name="verifypassword" size="25" onchange="setverifypassword()" required>
+    </p>
+    <br>
+    <div style="text-align:left">
+
+        <p>
+            <input class="btn btn-lg btn-primary" id="createbtn" type="button" onclick="createcustomer()" value="Submit">
+        </p>
+    </div>
+</form>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="managecustomer.js"></script>
+<script src="manageuser.js"></script>
+
+
+
+</body>
+
+</html>
