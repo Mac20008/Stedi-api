@@ -49,12 +49,12 @@ spec:
             - name: TWILIO_ACCOUNT_SID
               valueFrom:
                 secretKeyRef:
-                  name: twilio-dev
+                  name: jose-twilio-dev
                   key: twilio_account_sid
             - name: TWILIO_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: twilio-dev
+                  name: jose-twilio-dev
                   key: twilio_token
             - name: TWILIO_PHONE
               value: "+17146778438"
