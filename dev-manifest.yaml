@@ -46,18 +46,18 @@ spec:
               value: "0"
             - name: KAFKA_BROKER
               value: "localhost:9092"
-            - name: TWILIO_ACCOUNT_SID
-              valueFrom:
-                secretKeyRef:
-                  name: jose-twilio-dev
-                  key: twilio_account_sid
+            #- name: TWILIO_ACCOUNT_SID
+             # valueFrom:
+              #  secretKeyRef:
+               #   name: jose-twilio-dev
+                #  key: twilio_account_sid
             - name: TWILIO_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: jose-twilio-dev
                   key: twilio_token
-            - name: TWILIO_PHONE
-              value: "+17146778438"
+            #- name: TWILIO_PHONE
+             # value: "+17146778438"
 # The ports is a list of tcp ports the pod listens on
           ports:
 # ContainerPort is a specific port the pod listens on
