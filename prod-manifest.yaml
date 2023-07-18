@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prod-stedi-jose
-          image: gcr.io/cubs-consulting/stedi #This image needs to refer to the new artifact registry repo
+          image: us-docker.pkg.dev/cit-262-team1-ez/jose-api/stedi-api:latest #This image needs to refer to the new artifact registry repo
           env:
             - name: REDIS_PASSWORD
               valueFrom:
